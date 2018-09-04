@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace DownloadTool
 {
     public static class HttpDownloadExtend
     {
-        public static bool HttpDownload(string url, string path)
+        public static async Task<bool> HttpDownload(string url, string path)
         {
             if (!Directory.Exists(path))
             {
@@ -23,7 +24,7 @@ namespace DownloadTool
             try
             {
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
                 using (Stream responseStream = response.GetResponseStream())
                 {
                     byte[] bArr = new byte[1024];

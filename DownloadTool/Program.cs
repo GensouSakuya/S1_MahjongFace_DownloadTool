@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using static DownloadTool.HttpDownloadExtend;
 
@@ -8,16 +9,17 @@ namespace DownloadTool
     {
         static void Main(string[] args)
         {
-            Parallel.ForEach(Config.NameMappings, t =>
+            var tasks = Config.NameMappings.Select(async t =>
             {
                 for (int i = 1; i <= 300; i++)
                 {
-                    HttpDownload($"https://static.saraba1st.com/image/smiley/{t.Item1}/{i.ToString().PadLeft(3, '0')}.png",
+                    await HttpDownload($"https://static.saraba1st.com/image/smiley/{t.Item1}/{i.ToString().PadLeft(3, '0')}.png",
                         $@"{Directory.GetCurrentDirectory()}\麻将脸\{t.Item2}");
-                    HttpDownload($"https://static.saraba1st.com/image/smiley/{t.Item1}/{i.ToString().PadLeft(3, '0')}.gif",
+                    await HttpDownload($"https://static.saraba1st.com/image/smiley/{t.Item1}/{i.ToString().PadLeft(3, '0')}.gif",
                         $@"{Directory.GetCurrentDirectory()}\麻将脸\{t.Item2}");
                 }
             });
+            Task.WaitAll(tasks.ToArray());
         }
     }
 }
