@@ -14,6 +14,8 @@ namespace DownloadTool
                 {
                     HttpDownload($"https://static.saraba1st.com/image/smiley/{t.Item1}/{i.ToString().PadLeft(3, '0')}.png",
                         $@"{Directory.GetCurrentDirectory()}\麻将脸\{t.Item2}");
+                    HttpDownload($"https://static.saraba1st.com/image/smiley/{t.Item1}/{i.ToString().PadLeft(3, '0')}.gif",
+                        $@"{Directory.GetCurrentDirectory()}\麻将脸\{t.Item2}");
                 }
             });
         }

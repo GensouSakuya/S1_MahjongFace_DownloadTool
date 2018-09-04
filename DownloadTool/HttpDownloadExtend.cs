@@ -17,7 +17,7 @@ namespace DownloadTool
             string fileName = path + @"\" + urlFileName ?? "aaa.temp";
             if (File.Exists(fileName))
             {
-                File.Delete(fileName);    //存在则删除
+                return true;
             }
 
             try
