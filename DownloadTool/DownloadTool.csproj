@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs" />
     <Compile Include="HttpDownloadExtend.cs" />
+    <Compile Include="MajongFaceHelper.cs" />
+    <Compile Include="MajongFaceFileItem.cs" />
+    <Compile Include="MajongFaceType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

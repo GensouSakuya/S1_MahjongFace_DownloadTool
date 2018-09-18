@@ -7,16 +7,33 @@ namespace DownloadTool
 {
     public static class HttpDownloadExtend
     {
-        public static async Task<bool> HttpDownload(string url, string path)
+        public static string GetTextResponse(string url)
+        {
+            var req = (HttpWebRequest) WebRequest.Create(url);
+            var res = (HttpWebResponse)req.GetResponse();
+            var text = "";
+            using (var stream = res.GetResponseStream())
+            {
+                var reader = new StreamReader(stream, System.Text.Encoding.UTF8);
+                text = reader.ReadToEnd();
+            }
+            return text;
+        }
+
+        public static async Task<bool> HttpDownload(string url, string path,string fileName)
         {
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
+            
+            if (fileName == null)
+            {
+                fileName = "aaa.temp";
+            }
 
-            var urlFileName = url.Split('/').LastOrDefault();
-            string fileName = path + @"\" + urlFileName ?? "aaa.temp";
-            if (File.Exists(fileName))
+            var fullFileName = Path.Combine(path, fileName);
+            if (File.Exists(fullFileName))
             {
                 return true;
             }
@@ -33,7 +50,7 @@ namespace DownloadTool
                     {
                         return false;
                     }
-                    using (FileStream fs = new FileStream(fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                    using (FileStream fs = new FileStream(fullFileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                     {
                         while (size > 0)
                         {
